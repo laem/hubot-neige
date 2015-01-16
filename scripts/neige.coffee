@@ -26,7 +26,7 @@ module.exports = (robot) ->
         .header('Accept', 'application/json')
         .get() (err, res, body) ->
           data = JSON.parse(body)
-          var fall = data.report.snowfall.snow24h
+          fall = data.report.snowfall.snow24h
 
           if fall
             msg.send "Elle a tombé : #{fall} cm de neige hier :-D B-)"
