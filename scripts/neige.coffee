@@ -9,7 +9,7 @@
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
 
-neigeUrl = "http://www.myweather2.com/developer/weather.ashx?uac=7fcYm4FvK/&output=json&uref=b10a3eb6-d28a-4194-b01a-36c07dbd5d2f"
+neigeUrl = "http://clientservice.onthesnow.com/externalservice/resort/2212/snowreport?token=a5bae8eea465aae810130937a29cebaa6cd92ce60336d8e3&language=fr&country=FR"
 
 module.exports = (robot) ->
 
@@ -26,13 +26,22 @@ module.exports = (robot) ->
         .header('Accept', 'application/json')
         .get() (err, res, body) ->
           data = JSON.parse(body)
+          var fall = data.report.snowfall.snow24h
+
+          if fall
+            msg.send "Elle a tombé : #{fall} cm de neige hier :-D B-)"
+
+          onSlope = data.report.snowQuality.onSlope
+          msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
+          msg.send "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
+
           msg.send "#{data.weather.snow_report[0].conditions}"
-     , 1000
+     , 10000
 
    robot.respond /stop neige/, (msg) ->
      if annoyIntervalId
        msg.send "OK, ça va..."
-       clearInterval(annoyIntervalId)
+       clearIntervamsg.send(annoyIntervalId)
        annoyIntervalId = null
      else
        msg.send "Impossible, les alertes ne sont pas activées"
