@@ -26,6 +26,7 @@ module.exports = (robot) ->
         .header('Accept', 'application/json')
         .get() (err, res, body) ->
           data = JSON.parse(body)
+          console.log(data.weather.snow_report)
           msg.send "#{data.weather.snow_report.conditions}"
      , 1000
 
