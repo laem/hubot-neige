@@ -34,9 +34,9 @@ module.exports = (robot) ->
 
         delay = (s, i) ->
           setTimeout () ->
-            console.log(s)
+            msg.send s
           , 100 * i
-        
+
         for s, i in messages
           delay s, i
 
