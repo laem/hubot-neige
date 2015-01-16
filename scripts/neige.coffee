@@ -20,7 +20,7 @@ module.exports = (robot) ->
        msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
        return
 
-     msg.send "Excellent !"
+     msg.send "Je te tiens au courant !"
      annoyIntervalId = setInterval () ->
        robot.http(neigeUrl)
         .header('Accept', 'application/json')
@@ -28,8 +28,9 @@ module.exports = (robot) ->
           data = JSON.parse(body)
           fall = data.report.snowfall.snow24h
 
+          msg.send "*** Bulletin pour la Rosière ***"
           if fall
-            msg.send "Elle a tombé : #{fall} cm de neige hier :-D B-)"
+            msg.send "Elle a tombé : #{fall} cm de neige hier"
 
           onSlope = data.report.snowQuality.onSlope
           msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
@@ -39,7 +40,7 @@ module.exports = (robot) ->
    robot.respond /stop neige/, (msg) ->
      if annoyIntervalId
        msg.send "OK, ça va..."
-       clearIntervamsg.send(annoyIntervalId)
+       clearInterval(annoyIntervalId)
        annoyIntervalId = null
      else
        msg.send "Impossible, les alertes ne sont pas activées"
