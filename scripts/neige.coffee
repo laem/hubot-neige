@@ -15,7 +15,7 @@ module.exports = (robot) ->
 
    annoyIntervalId = null
 
-   robot.respond /active les alertes neige/, (msg) ->
+   robot.respond /neige/, (msg) ->
      if annoyIntervalId
        msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
        return
@@ -26,11 +26,10 @@ module.exports = (robot) ->
         .header('Accept', 'application/json')
         .get() (err, res, body) ->
           data = JSON.parse(body)
-          console.log(data.weather.snow_report)
-          msg.send "#{data.weather.snow_report.conditions}"
+          msg.send "#{data.weather.snow_report[0].conditions}"
      , 1000
 
-   robot.respond /désactive les alertes neige/, (msg) ->
+   robot.respond /stop neige/, (msg) ->
      if annoyIntervalId
        msg.send "OK, ça va..."
        clearInterval(annoyIntervalId)
