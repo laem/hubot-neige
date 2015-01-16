@@ -17,12 +17,6 @@ module.exports = (robot) ->
 
    robot.respond /neige/, (msg) ->
 
-     sendInOrder (strings) ->
-       for s, i in strings
-         setTimeout () ->
-           msg.send s
-         , 10 * i
-
      robot.http(neigeUrl)
       .header('Accept', 'application/json')
       .get() (err, res, body) ->
@@ -38,7 +32,10 @@ module.exports = (robot) ->
         messages.push "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
         messages.push "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
 
-        sendInOrder messages
+        for s, i in messages
+          setTimeout () ->
+            msg.send s
+          , 10 * i
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
