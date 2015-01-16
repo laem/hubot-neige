@@ -10,8 +10,8 @@
 
 module.exports = (robot) ->
 
-  # robot.hear /badger/i, (msg) ->
-  #   msg.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
+   robot.hear /badger/i, (msg) ->
+     msg.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
   
   # robot.respond /open the (.*) doors/i, (msg) ->
   #   doorType = msg.match[1]
@@ -53,25 +53,25 @@ module.exports = (robot) ->
   #     msg.send "Who you calling 'slow'?"
   #   , 60 * 1000
   #
-  # annoyIntervalId = null
-  #
-  # robot.respond /annoy me/, (msg) ->
-  #   if annoyIntervalId
-  #     msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
-  #     return
-  #
-  #   msg.send "Hey, want to hear the most annoying sound in the world?"
-  #   annoyIntervalId = setInterval () ->
-  #     msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
-  #   , 1000
-  #
-  # robot.respond /unannoy me/, (msg) ->
-  #   if annoyIntervalId
-  #     msg.send "GUYS, GUYS, GUYS!"
-  #     clearInterval(annoyIntervalId)
-  #     annoyIntervalId = null
-  #   else
-  #     msg.send "Not annoying you right now, am I?"
+   annoyIntervalId = null
+  
+   robot.respond /annoy me/, (msg) ->
+     if annoyIntervalId
+       msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
+       return
+  
+     msg.send "Hey, want to hear the most annoying sound in the world?"
+     annoyIntervalId = setInterval () ->
+       msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
+     , 1000
+  
+   robot.respond /unannoy me/, (msg) ->
+     if annoyIntervalId
+       msg.send "GUYS, GUYS, GUYS!"
+       clearInterval(annoyIntervalId)
+       annoyIntervalId = null
+     else
+       msg.send "Not annoying you right now, am I?"
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
