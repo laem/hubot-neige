@@ -8,70 +8,34 @@
 #
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
+
+var neigeUrl = "http://www.myweather2.com/developer/weather.ashx?uac=7fcYm4FvK/&output=json&uref=b10a3eb6-d28a-4194-b01a-36c07dbd5d2f"
+
 module.exports = (robot) ->
 
-   robot.hear /badger/i, (msg) ->
-     msg.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
-  
-  # robot.respond /open the (.*) doors/i, (msg) ->
-  #   doorType = msg.match[1]
-  #   if doorType is "pod bay"
-  #     msg.reply "I'm afraid I can't let you do that."
-  #   else
-  #     msg.reply "Opening #{doorType} doors"
-  #
-  # robot.hear /I like pie/i, (msg) ->
-  #   msg.emote "makes a freshly baked pie"
-  #
-  # lulz = ['lol', 'rofl', 'lmao']
-  #
-  # robot.respond /lulz/i, (msg) ->
-  #   msg.send msg.random lulz
-  #
-  # robot.topic (msg) ->
-  #   msg.send "#{msg.message.text}? That's a Paddlin'"
-  #
-  #
-  # enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
-  # leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
-  #
-  # robot.enter (msg) ->
-  #   msg.send msg.random enterReplies
-  # robot.leave (msg) ->
-  #   msg.send msg.random leaveReplies
-  #
-  # answer = process.env.HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING
-  #
-  # robot.respond /what is the answer to the ultimate question of life/, (msg) ->
-  #   unless answer?
-  #     msg.send "Missing HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING in environment: please set and try again"
-  #     return
-  #   msg.send "#{answer}, but what is the question?"
-  #
-  # robot.respond /you are a little slow/, (msg) ->
-  #   setTimeout () ->
-  #     msg.send "Who you calling 'slow'?"
-  #   , 60 * 1000
-  #
    annoyIntervalId = null
-  
-   robot.respond /annoy me/, (msg) ->
+
+   robot.respond /activer les alertes neige/, (msg) ->
      if annoyIntervalId
        msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
        return
-  
+
      msg.send "Hey, want to hear the most annoying sound in the world?"
      annoyIntervalId = setInterval () ->
-       msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
+       robot.http(neigeUrl)
+        .header('Accept', 'application/json')
+        .get() (err, res, body) ->
+          data = JSON.parse(body)
+          msg.send "#{data.snow_report.conditions}"
      , 1000
-  
-   robot.respond /unannoy me/, (msg) ->
+
+   robot.respond /désactiver les alertes neige/, (msg) ->
      if annoyIntervalId
-       msg.send "GUYS, GUYS, GUYS!"
+       msg.send "OK, ça va..."
        clearInterval(annoyIntervalId)
        annoyIntervalId = null
      else
-       msg.send "Not annoying you right now, am I?"
+       msg.send "Impossible, les alertes ne sont pas activées"
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
