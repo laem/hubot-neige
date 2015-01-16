@@ -17,19 +17,28 @@ module.exports = (robot) ->
 
    robot.respond /neige/, (msg) ->
 
+     sendInOrder (strings) ->
+       for s, i in strings
+         setTimeout () ->
+           msg.send s
+         , 10 * i
+
      robot.http(neigeUrl)
       .header('Accept', 'application/json')
       .get() (err, res, body) ->
         data = JSON.parse(body)
-        fall = data.report.snowfall.snow24h
+        messages = []
+        messages.push "*** Bulletin pour la Rosière ***"
 
-        msg.send "*** Bulletin pour la Rosière ***"
+        fall = data.report.snowfall.snow24h
         if fall
-          msg.send "Elle a tombé : #{fall} cm de neige hier"
+          messages.push "Elle a tombé : #{fall} cm de neige hier"
 
         onSlope = data.report.snowQuality.onSlope
-        msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
-        msg.send "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
+        messages.push "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
+        messages.push "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
+
+        sendInOrder messages
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
