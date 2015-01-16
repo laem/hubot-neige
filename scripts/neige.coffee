@@ -16,34 +16,20 @@ module.exports = (robot) ->
    annoyIntervalId = null
 
    robot.respond /neige/, (msg) ->
-     if annoyIntervalId
-       msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
-       return
 
-     msg.send "Je te tiens au courant !"
-     annoyIntervalId = setInterval () ->
-       robot.http(neigeUrl)
-        .header('Accept', 'application/json')
-        .get() (err, res, body) ->
-          data = JSON.parse(body)
-          fall = data.report.snowfall.snow24h
+     robot.http(neigeUrl)
+      .header('Accept', 'application/json')
+      .get() (err, res, body) ->
+        data = JSON.parse(body)
+        fall = data.report.snowfall.snow24h
 
-          msg.send "*** Bulletin pour la Rosière ***"
-          if fall
-            msg.send "Elle a tombé : #{fall} cm de neige hier"
+        msg.send "*** Bulletin pour la Rosière ***"
+        if fall
+          msg.send "Elle a tombé : #{fall} cm de neige hier"
 
-          onSlope = data.report.snowQuality.onSlope
-          msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
-          msg.send "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
-     , 10000
-
-   robot.respond /stop neige/, (msg) ->
-     if annoyIntervalId
-       msg.send "OK, ça va..."
-       clearInterval(annoyIntervalId)
-       annoyIntervalId = null
-     else
-       msg.send "Impossible, les alertes ne sont pas activées"
+        onSlope = data.report.snowQuality.onSlope
+        msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
+        msg.send "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
