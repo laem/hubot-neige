@@ -34,8 +34,6 @@ module.exports = (robot) ->
           onSlope = data.report.snowQuality.onSlope
           msg.send "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
           msg.send "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
-
-          msg.send "#{data.weather.snow_report[0].conditions}"
      , 10000
 
    robot.respond /stop neige/, (msg) ->
