@@ -9,27 +9,27 @@
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
 
-var neigeUrl = "http://www.myweather2.com/developer/weather.ashx?uac=7fcYm4FvK/&output=json&uref=b10a3eb6-d28a-4194-b01a-36c07dbd5d2f"
+neigeUrl = "http://www.myweather2.com/developer/weather.ashx?uac=7fcYm4FvK/&output=json&uref=b10a3eb6-d28a-4194-b01a-36c07dbd5d2f"
 
 module.exports = (robot) ->
 
    annoyIntervalId = null
 
-   robot.respond /activer les alertes neige/, (msg) ->
+   robot.respond /active les alertes neige/, (msg) ->
      if annoyIntervalId
        msg.send "AAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIHHHHHHHHHH"
        return
 
-     msg.send "Hey, want to hear the most annoying sound in the world?"
+     msg.send "Excellent !"
      annoyIntervalId = setInterval () ->
        robot.http(neigeUrl)
         .header('Accept', 'application/json')
         .get() (err, res, body) ->
           data = JSON.parse(body)
-          msg.send "#{data.snow_report.conditions}"
+          msg.send "#{data.weather.snow_report.conditions}"
      , 1000
 
-   robot.respond /désactiver les alertes neige/, (msg) ->
+   robot.respond /désactive les alertes neige/, (msg) ->
      if annoyIntervalId
        msg.send "OK, ça va..."
        clearInterval(annoyIntervalId)
