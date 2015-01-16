@@ -32,10 +32,14 @@ module.exports = (robot) ->
         messages.push "En bas: #{onSlope.surfaceBottom}, #{onSlope.lowerDepth} cm"
         messages.push "En haut: #{onSlope.surfaceTop}, #{onSlope.upperDepth} cm"
 
-        for s, i in messages
+        delay = (s, i) ->
           setTimeout () ->
-            msg.send s
-          , 10 * i
+            console.log(s)
+          , 100 * i
+        
+        for s, i in messages
+          delay s, i
+
   #
   #
   # robot.router.post '/hubot/chatsecrets/:room', (req, res) ->
