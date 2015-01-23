@@ -82,7 +82,7 @@ inform = (robot, msg, keyword, resortQuery) ->
      snowFall24h = snowFall[0]
      snowFall72h = snowFall[1]
 
-     unless snowFall24h.match(/\d+/)[0] == 0
+     unless snowFall24h.match(/\d+/)[0] == "0"
        messages.push lang.fall(snowFall24h)
 
      delay = (s, i) ->
