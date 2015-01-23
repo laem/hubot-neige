@@ -1,26 +1,40 @@
 {
-  "name": "ubo",
-  "version": "0.0.0",
-  "private": true,
-  "author": "laem <l4em@outlook.com>",
-  "description": "C'est ubo quoi",
-  "dependencies": {
-    "hubot": "^2.11.0",
-    "hubot-diagnostics": "0.0.1",
-    "hubot-google-images": "^0.1.2",
-    "hubot-google-translate": "^0.1.0",
-    "hubot-help": "^0.1.1",
-    "hubot-heroku-keepalive": "0.0.4",
-    "hubot-maps": "0.0.1",
-    "hubot-pugme": "^0.1.0",
-    "hubot-redis-brain": "0.0.2",
-    "hubot-rules": "^0.1.0",
-    "hubot-scripts": "^2.5.16",
-    "hubot-shipit": "^0.1.1",
-    "hubot-tg": "git://github.com/zenitram/hubot-tg",
-    "hubot-youtube": "^0.1.2"
+  "name": "hubot-example",
+  "description": "An example script package for Hubot",
+  "version": "1.0.0",
+  "author": "Tom Bell <tomb@tomb.io>",
+  "license": "MIT",
+
+  "keywords": [
+    "hubot",
+    "hubot-scripts"
+  ],
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hubot-scripts/hubot-example.git"
   },
-  "engines": {
-    "node": "0.10.x"
+
+  "bugs": {
+    "url": "https://github.com/hubot-scripts/hubot-example/issues"
+  },
+
+  "dependencies": {
+    "coffee-script": "~1.6",
+    "cheerio": "*",
+    "fuzzy": "*"
+  },
+
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "sinon": "*"
+  },
+
+  "main": "index.coffee",
+
+  "scripts": {
+    "test": "script/test"
   }
 }
