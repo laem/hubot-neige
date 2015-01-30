@@ -28,14 +28,16 @@ i18n = {
       intro: (name) -> '*** Bulletin pour ' + name + ' ***',
       state: (state) -> 'Enneigement bas - haut : ' + state,
       fall: (snowFall24h) -> 'Elle a tombé : ' + snowFall24h + ' de neige hier',
-      lifts: (lifts) -> 'Remontées: ' + lifts
+      lifts: (lifts) -> 'Remontées: ' + lifts,
+      slopes: (slopes) -> 'Pistes: ' + slopes
     },
     'snow': {
       url: 'http://www.onthesnow.com/united-states/skireport.html',
       intro: (name) -> '*** Snow report for ' + name + ' ***',
       state: (state) -> 'Snow report down - up : ' + state,
       fall: (snowFall24h) -> 'Snowfall !! : ' + snowFall24h + ' of snow yesterday',
-      lifts: (lifts) -> 'Lifts: ' + lifts
+      lifts: (lifts) -> 'Lifts: ' + lifts,
+      slopes: (slopes) -> 'Slopes: ' + slopes
     }
 }
 
@@ -91,6 +93,7 @@ inform = (robot, msg, keyword, resortQuery) ->
         return $(this).text().match(/\d+\/\d+/)
 
      messages.push lang.lifts($(liftsAndSlopes[0]).text())
+     messages.push lang.slopes($(liftsAndSlopes[1]).text())
 
      delay = (s, i) ->
        setTimeout () ->
