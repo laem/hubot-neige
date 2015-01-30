@@ -27,13 +27,15 @@ i18n = {
       url : 'http://www.skiinfo.fr/france/bulletin-neige.html',
       intro: (name) -> '*** Bulletin pour ' + name + ' ***',
       state: (state) -> 'Enneigement bas - haut : ' + state,
-      fall: (snowFall24h) -> 'Elle a tombé : ' + snowFall24h + ' de neige hier'
+      fall: (snowFall24h) -> 'Elle a tombé : ' + snowFall24h + ' de neige hier',
+      lifts: (lifts) -> 'Remontées: ' + lifts
     },
     'snow': {
       url: 'http://www.onthesnow.com/united-states/skireport.html',
       intro: (name) -> '*** Snow report for ' + name + ' ***',
       state: (state) -> 'Snow report down - up : ' + state,
-      fall: (snowFall24h) -> 'Snowfall !! : ' + snowFall24h + ' of snow yesterday'
+      fall: (snowFall24h) -> 'Snowfall !! : ' + snowFall24h + ' of snow yesterday',
+      lifts: (lifts) -> 'Lifts: ' + lifts
     }
 }
 
@@ -84,6 +86,11 @@ inform = (robot, msg, keyword, resortQuery) ->
 
      unless snowFall24h.match(/\d+/)[0] == "0"
        messages.push lang.fall(snowFall24h)
+
+     liftsAndSlopes = $(row).find('.rMid').filter (i, el) ->
+        return $(this).text().match(/\d+\/\d+/)
+
+     messages.push lang.lifts($(liftsAndSlopes[0]).text())
 
      delay = (s, i) ->
        setTimeout () ->
