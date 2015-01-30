@@ -92,8 +92,11 @@ inform = (robot, msg, keyword, resortQuery) ->
      liftsAndSlopes = $(row).find('.rMid').filter (i, el) ->
         return $(this).text().match(/\d+\/\d+/)
 
-     messages.push lang.lifts($(liftsAndSlopes[0]).text().trim())
-     messages.push lang.slopes($(liftsAndSlopes[1]).text().trim())
+     lifts = $(liftsAndSlopes[0]).text().trim()
+     messages.push lang.lifts(lifts)
+     slopes = $(liftsAndSlopes[1]).text().trim()
+     if(slopes)
+       messages.push lang.slopes(slopes)
 
      delay = (s, i) ->
        setTimeout () ->
